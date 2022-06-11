@@ -1,0 +1,28 @@
+<form method='POST'>{% csrf_token %}
+  <div class="form">
+    <div class="form-contents">
+      <div class="form-content">
+        <p>カテゴリー</p>
+        {{form.category}}
+      </div>
+      <div class="form-content">
+        <p>使用技術</p>
+        {{form.technique}}
+      </div>
+      <div class="form-content">
+        <p>エラーメッセージ</p>
+        {{form.error_message}}
+      </div>
+      <div class="form-content">
+        <p>エラー詳細</p>
+        {{form.error_detail}}
+      </div>
+      <div class="form-content">
+        <p>今実践しているもの</p>
+        {{form.Feature}}
+      </div>
+    </div>
+
+  </div>
+  <input type="submit" value="作成する">
+</form>
