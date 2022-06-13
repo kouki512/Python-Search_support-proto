@@ -1,1 +1,12 @@
-{{suggest_word}}
+{% extends 'base.html' %}
+{%block title%}提案結果 {%endblock%}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <h2>提案結果</h2>
+            <h3>こちらのワードなどいかがでしょうか？</h3>
+            {{suggest_word}}</div>
+    </div>
+</div>
+{% endblock content %}
