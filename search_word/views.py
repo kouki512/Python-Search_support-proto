@@ -23,7 +23,19 @@ class SuggestWordView(DetailView):
   model = SearchWord
   
 def suggest_word(words):
-  suggest_word = words.technique + " " + words.error_detail
+  #for word in words:
+  # 提案ワードを格納する配列をオブジェクトの各要素を変数に定義
+  suggest_word = []
+  technique = words.technique 
+  error_message = words.error_message
+  error_detail = words.error_detail
+  Feature = words.Feature
+  # 提案ワードを配列に格納
+  suggest_word.append(technique + " " + error_detail)
+  suggest_word.append(technique + " " + Feature)
+  suggest_word.append(technique + " " + error_message)
+  suggest_word.append(technique + " " + error_message + " " + error_detail)
+  #print(words)
   return suggest_word
 
 def detail_func(request, pk):
