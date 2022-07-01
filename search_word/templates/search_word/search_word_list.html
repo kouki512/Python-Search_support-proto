@@ -6,6 +6,7 @@
   <div class="row">
     <div class="col-lg-8">
       <h2>検索内容一覧</h2>
+      <a href="{% url 'create_searchword' %}" class="btn btn-primary">新しく検索する</a>
       <table>
         <tbody>
           <tr>
@@ -17,17 +18,18 @@
             <th></th>
           </tr>
           {% for item in object_list %}
-            <tr>
-              <td >{{item.category}}</td>
-              <td>{{item.technique}}</td>
-              <td>{{item.error_message}}</td>
-              <td>{{item.error_detail}}</td>
-              <td> {{item.Feature}}</td>
-              <td><a href="{% url 'sugget_result' item.pk %}" class="btn btn-primary">検索ワードを見る</a></td>
-            </tr>
-              {% endfor %}
+          <tr>
+
+            <td>{{item.get_category_display}}</td>
+            <td>{{item.technique}}</td>
+            <td>{{item.error_message}}</td>
+            <td>{{item.error_detail}}</td>
+            <td> {{item.Feature}}</td>
+            <td><a href="{% url 'sugget_result' item.pk %}" class="btn btn-primary">検索ワードを見る</a></td>
+          </tr>
+          {% endfor %}
         </tbody>
-      </table>  
+      </table>
     </div>
     {% endblock content %}
   </div>
