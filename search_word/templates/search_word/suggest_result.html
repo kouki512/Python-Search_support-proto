@@ -6,7 +6,25 @@
         <div class="col-lg-8">
             <h2>提案結果</h2>
             <h3>こちらのワードなどいかがでしょうか？</h3>
-            {{suggest_result}}</div>
+            <table>
+                <tbody>
+                    <!-- ワードを繰り返し出力 -->
+                    {% for word in suggest_result %}
+                    <tr>
+                        <!-- viewに情報を送信するためのフォーム -->
+                        <form action="{% url 'search_word' object.pk %}" method="post">
+                            {% csrf_token %}
+                            <!-- ワードをボタンにして出力（{{word}}に格納） -->
+                            <td><input type="submit" name="copy_word" value="{{word}}"></td>
+                        </form>
+                    </tr>
+                    {% endfor %}
+
+                    <!-- 確認用の入力欄（必要はありません） -->
+                    <td><input type="text"></td>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {% endblock content %}
