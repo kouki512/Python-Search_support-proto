@@ -27,7 +27,7 @@ except ImportError:
     pass
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["https://quiet-thicket-88620.herokuapp.com/"]
 
 
 # Application definition
