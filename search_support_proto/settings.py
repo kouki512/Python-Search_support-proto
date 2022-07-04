@@ -27,7 +27,7 @@ except ImportError:
     pass
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = ["https://quiet-thicket-88620.herokuapp.com/"]
+ALLOWED_HOSTS = ["quiet-thicket-88620.herokuapp.com","127.0.0.1"]
 
 
 # Application definition
@@ -148,6 +148,6 @@ if not DEBUG:
     MIDDLEWARE += [
         'whitenoise.middleware.WhiteNoiseMiddleware',
     ]
-
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     # HerokuのConfigを読み込み
     django_heroku.settings(locals())
