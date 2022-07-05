@@ -9,14 +9,6 @@ from django.views.decorators.csrf import requires_csrf_token
 from django.http import HttpResponseServerError
 
 
-@requires_csrf_token
-def my_customized_server_error(request, template_name='500.html'):
-    import sys
-    from django.views import debug
-    error_html = debug.technical_500_response(request, *sys.exc_info()).content
-    return HttpResponseServerError(error_html)
-
-
 class TopPageView(TemplateView):
     template_name = 'search_word/top.html'
 
@@ -72,3 +64,11 @@ def detail_func(request, pk):
 
 # 他の人が解決したワードとそのサイトURLを貼ってもらう。
 # 自分の入力内容と解決した人の入力内容の近似値を求めページも出力できるようにするのがよさそう。
+
+
+@requires_csrf_token
+def my_customized_server_error(request, template_name='500.html'):
+    import sys
+    from django.views import debug
+    error_html = debug.technical_500_response(request, *sys.exc_info()).content
+    return HttpResponseServerError(error_html)
