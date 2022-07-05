@@ -8,12 +8,14 @@ import pyperclip
 from django.views.decorators.csrf import requires_csrf_token
 from django.http import HttpResponseServerError
 
+
 @requires_csrf_token
 def my_customized_server_error(request, template_name='500.html'):
     import sys
     from django.views import debug
     error_html = debug.technical_500_response(request, *sys.exc_info()).content
     return HttpResponseServerError(error_html)
+
 
 class TopPageView(TemplateView):
     template_name = 'search_word/top.html'
@@ -29,7 +31,7 @@ class CreateSearchWordView(CreateView):
     model = SearchWord
     fields = {'category', 'technique',
               'error_message', 'error_detail', 'Feature'}
-    success_url = reverse_lazy('list_searchword')
+    success_url = reverse_lazy('search_words')
 
 
 class SuggestWordView(DetailView):
@@ -62,8 +64,8 @@ def detail_func(request, pk):
 
     if request.method == "POST":
         if "copy_word" in request.POST:
-          print(request.POST["copy_word"])
-          pyperclip.copy(request.POST["copy_word"])
+            print(request.POST["copy_word"])
+            pyperclip.copy(request.POST["copy_word"])
 
     return render(request, 'search_word/suggest_result.html', context)
 # Create your views here.
