@@ -12,14 +12,10 @@
                     {% for word in suggest_result %}
                     <tr>
                         <!-- viewに情報を送信するためのフォーム -->
-                        <form action="{% url 'search_word' object.pk %}" method="post">
-                            {% csrf_token %}
-                            <!-- ワードをボタンにして出力（{{word}}に格納） -->
-                            <td><input type="submit" name="copy_word" value="{{word}}"></td>
-                        </form>
+                        <td>{{word}}</td>
                     </tr>
                     {% endfor %}
-    
+
                 </tbody>
             </table>
         </div>
