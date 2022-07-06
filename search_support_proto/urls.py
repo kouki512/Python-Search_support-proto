@@ -18,6 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path ('accounts/', include('django.contrib.auth.urls')),
     # search_word/urls.pyを認識させる
     path('', include('search_word.urls')),
 ]

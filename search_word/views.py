@@ -8,7 +8,6 @@ import pyperclip
 from django.views.decorators.csrf import requires_csrf_token
 from django.http import HttpResponseServerError
 
-
 class TopPageView(TemplateView):
     template_name = 'search_word/top.html'
 
@@ -54,10 +53,11 @@ def detail_func(request, pk):
     # viewに渡す物を辞書型配列に変換
     context = {'object': object, 'suggest_result': suggest_result}
 
-    if request.method == "POST":
-        if "copy_word" in request.POST:
-            print(request.POST["copy_word"])
-            pyperclip.copy(request.POST["copy_word"])
+    # クリックした文字列をコピーする（一旦非実装）
+    # if request.method == "POST":
+    #     if "copy_word" in request.POST:
+    #         print(request.POST["copy_word"])
+    #         pyperclip.copy(request.POST["copy_word"])
 
     return render(request, 'search_word/suggest_result.html', context)
 # Create your views here.
