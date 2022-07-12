@@ -21,7 +21,7 @@ class ListSearchWordView(ListView):
 class CreateSearchWordView(CreateView):
     template_name = 'search_word/search_word_create.html'
     model = SearchWord
-    fields = {'category', 'technique',
+    fields = {'technique',
               'error_message', 'error_detail', 'Feature'}
     success_url = reverse_lazy('search_words')
 
@@ -50,25 +50,10 @@ def suggest_word(words):
 def detail_func(request, pk):
     object = SearchWord.objects.get(pk=pk)
     suggest_result = suggest_word(object)
-    print(suggest_result)
     # viewに渡す物を辞書型配列に変換
     context = {'object': object, 'suggest_result': suggest_result}
-
-    if request.method == "POST":
-        if "copy_word" in request.POST:
-            print(request.POST["copy_word"])
-            pyperclip.copy(request.POST["copy_word"])
-
     return render(request, 'search_word/suggest_result.html', context)
 # Create your views here.
 
 # 他の人が解決したワードとそのサイトURLを貼ってもらう。
 # 自分の入力内容と解決した人の入力内容の近似値を求めページも出力できるようにするのがよさそう。
-
-
-@requires_csrf_token
-def my_customized_server_error(request, template_name='500.html'):
-    import sys
-    from django.views import debug
-    error_html = debug.technical_500_response(request, *sys.exc_info()).content
-    return HttpResponseServerError(error_html)
