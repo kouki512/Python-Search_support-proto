@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 # request送信後redirect先を決める reverse_lazy
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, FormView, DetailView, TemplateView
 from .models import SearchWord
-from .forms import SelectLanguageFormClass
+from .forms import SelectLanguageFormClass, SelectErrorsFormClass
 
 
 class TopPageView(TemplateView):
@@ -16,11 +16,39 @@ class ListSearchWordView(ListView):
 
 
 def SelectLanguage(request):
-    form = SelectLanguageFormClass(request.POST)
+    if request.method == 'GET':
+        form = SelectLanguageFormClass(request.session.get('form_data'))
+    else:
+        form = SelectLanguageFormClass(request.POST)
+        if form.is_valid():
+            request.session['technique'] = request.POST
+            return redirect('select_errors')
     context = {
-        'form' : form
+        'form': form
     }
-    return render(request,'search_word/select_language.html',context)
+    return render(request, 'search_word/select_language.html', context)
+
+
+def SelectErrors(request):
+    # 送信されたセッションの取得
+    technique = request.session.get('technique')
+    # 選択言語及びフレームワークによるchoicesの定義
+    if technique['technique'] == 'rails':
+        error_message = (
+            ('syntax', 'SyntaxError'), ('undefind', 'UndefindMethod'))
+    elif technique['technique'] == 'django':
+        error_message = (
+            ('syntax', 'SyntaxError'), ('undefind', 'UndefindMethod'))
+    # フォームの呼び出し（使用技術は前回送信したものを初期値に）
+    form = SelectErrorsFormClass(technique)
+    # エラーメッセージのプルダウンの更新
+    form.fields['error_message'].choices = error_message
+    # contextの定義
+    context = {
+        'form': form,
+        'technique':technique['technique']
+    }
+    return render(request, 'search_word/select_errors.html', context)
 
 
 class CreateSearchWordView(CreateView):

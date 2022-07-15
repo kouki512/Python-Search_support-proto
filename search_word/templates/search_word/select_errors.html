@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}検索ワード作成 {%endblock%}
+
+{% block content %}
+<div class="form">
+  <div class="form-contents">
+    <div class="form-content">
+      <form method='POST'>{% csrf_token %}
+        <div class="form">
+          <div class="form-contents">
+            <div class="form-content">
+              <p>選択した言語及びフレームワーク</p>
+              <div class="selected_technique">
+                {{technique}}
+              </div>
+              <label for="">エラーメッセージ</label>
+              {{form.error_message}}
+              <label for="">エラーの詳細</label>
+              {{form.error_details}}
+            </div>
+          </div>
+        </div>
+        <input type="submit" value="作成する">
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}

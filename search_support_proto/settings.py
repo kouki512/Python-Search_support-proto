@@ -10,6 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+from django.http import (
+    HttpResponseBadRequest, HttpResponseForbidden, HttpResponseNotFound,
+    HttpResponseServerError,)
+from django.views.decorators.csrf import requires_csrf_token
 from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -79,7 +83,7 @@ WSGI_APPLICATION = 'search_support_proto.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'),
     }
 }
 
@@ -152,10 +156,3 @@ if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     # HerokuのConfigを読み込み
     django_heroku.settings(locals())
-
-from django.views.decorators.csrf import requires_csrf_token
-from django.http import (
-    HttpResponseBadRequest, HttpResponseForbidden, HttpResponseNotFound,
-    HttpResponseServerError,)
-
-
