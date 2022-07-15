@@ -1,8 +1,9 @@
 from django.shortcuts import render
 # request送信後redirect先を決める reverse_lazy
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DetailView, TemplateView
+from django.views.generic import CreateView, ListView, FormView, DetailView, TemplateView
 from .models import SearchWord
+from .forms import SelectLanguageFormClass
 
 
 class TopPageView(TemplateView):
@@ -11,6 +12,12 @@ class TopPageView(TemplateView):
 
 class ListSearchWordView(ListView):
     template_name = 'search_word/search_word_list.html'
+    model = SearchWord
+
+
+class SelectLanguageView(FormView):
+    template_name = 'search_word/select_language.html'
+    form_class = SelectLanguageFormClass
     model = SearchWord
 
 
