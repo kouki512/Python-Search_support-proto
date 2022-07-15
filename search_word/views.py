@@ -15,10 +15,12 @@ class ListSearchWordView(ListView):
     model = SearchWord
 
 
-class SelectLanguageView(FormView):
-    template_name = 'search_word/select_language.html'
-    form_class = SelectLanguageFormClass
-    model = SearchWord
+def SelectLanguage(request):
+    form = SelectLanguageFormClass(request.POST)
+    context = {
+        'form' : form
+    }
+    return render(request,'search_word/select_language.html',context)
 
 
 class CreateSearchWordView(CreateView):
