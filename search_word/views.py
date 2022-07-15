@@ -3,10 +3,6 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, TemplateView
 from .models import SearchWord
-import pyperclip
-
-from django.views.decorators.csrf import requires_csrf_token
-from django.http import HttpResponseServerError
 
 
 class TopPageView(TemplateView):
