@@ -4,15 +4,17 @@ from django.db import models
 
 class SelectLanguageFormClass(forms.Form):
     TECHNIQUE = (('rails', 'Ruby on Rails'), ('django', 'Django'))
-    technique = forms.ChoiceField(label="言語及びフレームワーク", choices=TECHNIQUE)
-
+    # technique = forms.ChoiceField(label="言語及びフレームワーク", choices=TECHNIQUE)
+    technique = forms.CharField(label="言語及びフレームワーク", initial='rails')
 
 class SelectErrorsFormClass(forms.Form):
     TECHNIQUE = (('rails', 'Ruby on Rails'), ('django', 'Django'))
-    ERROR_MESSAGE = (('',''),('',''))
-    technique = forms.ChoiceField(label="言語及びフレームワーク", choices=TECHNIQUE)
-    error_message = forms.ChoiceField(label="エラーメッセージ", choices=TECHNIQUE)
-    error_details = forms.CharField()
+    ERROR_MESSAGE = (('',''),('',''),('',''),('',''))
+    #technique = forms.ChoiceField(label="言語及びフレームワーク", choices=TECHNIQUE)
+    technique = forms.CharField(label="言語及びフレームワーク", initial='rails')
+    error_message = forms.ChoiceField(label="エラーメッセージ", choices=ERROR_MESSAGE)
+    error_detail = forms.CharField()
+    Feature = forms.CharField()
 
     def __init__(self, *args, **kwargs):
         for field in self.base_fields.values():
