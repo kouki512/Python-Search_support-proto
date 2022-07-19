@@ -1,12 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 # request送信後redirect先を決める reverse_lazy
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DetailView, TemplateView
+from django.views.generic import CreateView, ListView, FormView, DetailView, TemplateView
 from .models import SearchWord
-import pyperclip
-
-from django.views.decorators.csrf import requires_csrf_token
-from django.http import HttpResponseServerError
+from .forms import SelectLanguageFormClass, SelectErrorsFormClass
 
 
 class TopPageView(TemplateView):
@@ -16,6 +13,71 @@ class TopPageView(TemplateView):
 class ListSearchWordView(ListView):
     template_name = 'search_word/search_word_list.html'
     model = SearchWord
+
+
+def SelectLanguage(request):
+    # if request.method == 'GET':
+    #     form = SelectLanguageFormClass(request.session.get('form_data'))
+    # else:
+    #     form = SelectLanguageFormClass(request.POST)
+    #     if form.is_valid():
+    #         request.session['technique'] = request.POST
+    #         return redirect('select_errors')
+    if request.method == 'GET':
+        form = SelectLanguageFormClass(request.session.get('form_data'))
+    else:
+        form = SelectLanguageFormClass(request.POST)
+        if form.is_valid():
+            request.session['technique'] = 'rails'
+            return redirect('select_errors')
+    context = {
+        'form': form
+    }
+    return render(request, 'search_word/select_language.html', context)
+
+
+def SelectErrors(request):
+    # # 送信されたセッションの取得
+    # technique = request.session.get('technique')
+    # # 選択言語及びフレームワークによるchoicesの定義
+    # if technique['technique'] == 'rails':
+    #     error_message = (
+    #         ('syntax', 'SyntaxError'), ('undefind', 'UndefindMethod'))
+    # elif technique['technique'] == 'django':
+    #     error_message = (
+    #         ('syntax', 'SyntaxError'), ('undefind', 'UndefindMethod'))
+    # # フォームの呼び出し（使用技術は前回送信したものを初期値に）
+    # form = SelectErrorsFormClass(technique)
+    # # エラーメッセージのプルダウンの更新
+    # form.fields['error_message'].choices = error_message
+    # # contextの定義
+    # context = {
+    #     'form': form,
+    #     'technique':technique['technique']
+    # }
+    # 送信されたセッションの取得
+    technique = request.session.get('technique')
+    print(technique)
+    # 選択言語及びフレームワークによるchoicesの定義
+    error_message = (
+        ('SyntaxError', 'SyntaxError'), ('UndefindMethod', 'UndefindMethod'),('ArgumentError','ArgumentError'),('RoutingError','RoutingError'))
+    # フォームの呼び出し（使用技術は前回送信したものを初期値に）
+    form = SelectErrorsFormClass()
+    # エラーメッセージのプルダウンの更新
+    form.fields['error_message'].choices = error_message
+    # contextの定義
+    if request.method == 'POST':
+        form = SelectErrorsFormClass(request.POST)
+        form.fields['error_message'].choices = error_message
+        if form.is_valid():
+            SearchWord.objects.create(**form.cleaned_data)
+            return redirect('search_words')
+        else:
+            print(form)
+    context = {
+        'form': form,
+    }
+    return render(request, 'search_word/select_errors.html', context)
 
 
 class CreateSearchWordView(CreateView):

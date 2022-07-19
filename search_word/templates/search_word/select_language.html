@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}検索ワード作成 {%endblock%}
+
+{% block content %}
+<form method='POST'>{% csrf_token %}
+  <div class="form">
+    <div class="form-contents">
+      <div class="form-content">
+        <p>言語及びフレームワーク</p>
+        <p>Ruby on Rails</p>
+        {{form.technique.as_hidden}}
+      </div>
+    </div>
+  </div>
+  <input type="submit" value="作成する">
+</form>
+{% endblock content %}
