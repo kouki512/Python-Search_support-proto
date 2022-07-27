@@ -11,3 +11,6 @@ urlpatterns = [
   path('search_words/', views.ListSearchWordView.as_view(),name='search_words'),
   path('suggest_result/<int:pk>/', detail_func, name='search_word'),
 ]
+# 正規表現⇒有効性を試す
+# その後
+# ベイズ、クラスタリング

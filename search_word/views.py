@@ -60,7 +60,7 @@ def SelectErrors(request):
     print(technique)
     # 選択言語及びフレームワークによるchoicesの定義
     error_message = (
-        ('SyntaxError', 'SyntaxError'), ('UndefindMethod', 'UndefindMethod'),('ArgumentError','ArgumentError'),('RoutingError','RoutingError'))
+        ('SyntaxError', 'SyntaxError'), ('UndefindMethodError', 'UndefindMethodError'),('ArgumentError','ArgumentError'),('RoutingError','RoutingError'))
     # フォームの呼び出し（使用技術は前回送信したものを初期値に）
     form = SelectErrorsFormClass()
     # エラーメッセージのプルダウンの更新
@@ -104,6 +104,7 @@ def suggest_word(words):
     # 提案ワードを配列に格納
     suggest_word.append(technique + " " + error_detail)
     suggest_word.append(technique + " " + Feature)
+    suggest_word.append(technique + " " + Feature + " " + error_message)
     suggest_word.append(technique + " " + error_message)
     suggest_word.append(technique + " " + error_message + " " + error_detail)
     return suggest_word
