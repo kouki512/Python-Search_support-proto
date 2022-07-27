@@ -8,5 +8,5 @@ class SearchWord(models.Model):
     choices = TECHNIQUE
   )
   error_message = models.CharField(max_length=100)
-  error_detail = models.CharField(max_length=250)
+  error_detail = models.TextField(max_length=1000)
   Feature = models.CharField(max_length=100)
