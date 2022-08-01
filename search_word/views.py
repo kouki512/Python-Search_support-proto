@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, FormView, DetailView, TemplateView
 from .models import SearchWord
 from .forms import SelectLanguageFormClass, SelectErrorsFormClass
+import re
 
 
 class TopPageView(TemplateView):
@@ -55,20 +56,19 @@ def SelectErrors(request):
     #     'form': form,
     #     'technique':technique['technique']
     # }
+
     # 送信されたセッションの取得
     technique = request.session.get('technique')
-    print(technique)
     # 選択言語及びフレームワークによるchoicesの定義
-    error_message = (
-        ('SyntaxError', 'SyntaxError'), ('UndefindMethod', 'UndefindMethod'),('ArgumentError','ArgumentError'),('RoutingError','RoutingError'))
+
     # フォームの呼び出し（使用技術は前回送信したものを初期値に）
     form = SelectErrorsFormClass()
-    # エラーメッセージのプルダウンの更新
-    form.fields['error_message'].choices = error_message
+   
     # contextの定義
     if request.method == 'POST':
         form = SelectErrorsFormClass(request.POST)
-        form.fields['error_message'].choices = error_message
+        #form.fields['error_message'].choices = error_message
+        # formに入力がある場合オブジェクトを生成
         if form.is_valid():
             SearchWord.objects.create(**form.cleaned_data)
             return redirect('search_words')
@@ -79,42 +79,62 @@ def SelectErrors(request):
     }
     return render(request, 'search_word/select_errors.html', context)
 
-
-class CreateSearchWordView(CreateView):
-    template_name = 'search_word/search_word_create.html'
-    model = SearchWord
-    fields = {'technique',
-              'error_message', 'error_detail', 'Feature'}
-    success_url = reverse_lazy('search_words')
-
-
 class SuggestWordView(DetailView):
     template_name = 'search_word/suggest_result.html'
     model = SearchWord
 
+# 入力されたエラーメッセージを分割し検索に必要なワードを抽出する関数
+def selection_error(error_message):
+    # エラーの大枠を抽出
+    general_error = re.sub(r'(in\s.+?#.+[\s\S]*)|(Showing.+raised:)', '', error_message.error_message)
+    # エラーの詳細を抽出
+    error_detail = re.sub(r'(.+\s(/.+):)|(for\s#.+)|(.+in\s.+?#.+)|(Did you mean[\s\S]*)|(Routing Error)', '',
+                          error_message.error_message)
 
-def suggest_word(words):
+    # 抽出したエラーメッセージを辞書型配列に格納
+    collection_result = {"general_error": general_error,
+                         "error_detail": error_detail}
+    return collection_result
+
+
+def suggest_word(words, colection_error):
     # 提案ワードを格納する配列をオブジェクトの各要素を変数に定義
     suggest_word = []
     technique = words.technique
-    error_message = words.error_message
-    error_detail = words.error_detail
+    general_error = colection_error['general_error']
+    error_detail = colection_error['error_detail']
     Feature = words.Feature
 
     # 提案ワードを配列に格納
+    suggest_word.append(technique + " " + general_error + " " + error_detail)
+    suggest_word.append(technique + " " + general_error)
     suggest_word.append(technique + " " + error_detail)
     suggest_word.append(technique + " " + Feature)
-    suggest_word.append(technique + " " + error_message)
-    suggest_word.append(technique + " " + error_message + " " + error_detail)
+    suggest_word.append(technique + " " + Feature + " " + general_error)
+    suggest_word.append(technique + " " + Feature + " " + error_detail)
     return suggest_word
 
 
 def detail_func(request, pk):
     object = SearchWord.objects.get(pk=pk)
-    suggest_result = suggest_word(object)
+    # エラーメッセージの抽出
+    collection_result = {}
+    collection_result = selection_error(object)
+    # 抽出ココまで
+
+    # 検索ワードの作成
+    suggest_result = suggest_word(object, collection_result)
+    # 検索ワードの作成ココまで
+
     # viewに渡す物を辞書型配列に変換
     context = {'object': object, 'suggest_result': suggest_result}
     return render(request, 'search_word/suggest_result.html', context)
+
+def DeleteSearchWord(request, pk):
+    if request.method == 'POST':
+        search_word = SearchWord.objects.get(pk=pk)
+        search_word.delete()
+    return redirect('search_words')
 # Create your views here.
 
 # 他の人が解決したワードとそのサイトURLを貼ってもらう。
