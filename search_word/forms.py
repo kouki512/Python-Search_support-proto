@@ -13,7 +13,7 @@ class SelectErrorsFormClass(forms.Form):
     #technique = forms.ChoiceField(label="言語及びフレームワーク", choices=TECHNIQUE)
     technique = forms.CharField(label="言語及びフレームワーク", initial='rails')
     # error_message = forms.ChoiceField(label="エラーメッセージ", choices=ERROR_MESSAGE)
-    error_detail = forms.CharField(widget=forms.Textarea)
+    error_message = forms.CharField(widget=forms.Textarea)
     Feature = forms.CharField()
 
     def __init__(self, *args, **kwargs):

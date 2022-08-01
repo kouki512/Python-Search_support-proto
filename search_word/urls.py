@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import detail_func
+from .views import detail_func,DeleteSearchWord
 from . import views 
 
 urlpatterns = [
@@ -10,6 +10,7 @@ urlpatterns = [
   path('search_word/new/errors',views.SelectErrors,name='select_errors'),
   path('search_words/', views.ListSearchWordView.as_view(),name='search_words'),
   path('suggest_result/<int:pk>/', detail_func, name='search_word'),
+  path('search_words/<int:pk>/delete/',DeleteSearchWord,name='delete_search_words'),
 ]
 # 正規表現⇒有効性を試す
 # その後

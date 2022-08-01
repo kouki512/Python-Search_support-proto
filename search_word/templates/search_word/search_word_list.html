@@ -4,26 +4,29 @@
 {% block content %}
 <div class="container">
   <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-12">
       <h2>検索内容一覧</h2>
       <a href="{% url 'select_language' %}" class="btn btn-primary">新しく検索する</a>
       <table class="table">
         <tbody>
           <tr>
-            <th>目的</th>
-            <th>使用技術</th>
-            <th>エラーメッセージ</th>
-            <th>エラー詳細</th>
-            <th>実装内容</th>
-            <th></th>
+            <th>フレームワーク</th>
+            <th class="w-20">エラーメッセージ</th>
+            <th>実装内容</th>   
+            <th></th>      
           </tr>
           {% for item in object_list %}
           <tr>
             <td>{{item.get_technique_display}}</td>
-            <td>{{item.error_message}}</td>
-            <td>{{item.error_detail}}</td>
+            <td class="w-50">{{item.error_message}}</td>
             <td> {{item.Feature}}</td>
             <td><a href="{% url 'search_word' item.pk %}" class="btn btn-primary">検索ワードを見る</a></td>
+            <td>
+              <form action="{% url 'delete_search_words' item.pk %}" method="POST">
+                {% csrf_token %}
+                <input class="btn btn-danger" type="submit" value="削除">
+              </form>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
