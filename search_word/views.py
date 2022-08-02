@@ -139,3 +139,7 @@ def DeleteSearchWord(request, pk):
 
 # 他の人が解決したワードとそのサイトURLを貼ってもらう。
 # 自分の入力内容と解決した人の入力内容の近似値を求めページも出力できるようにするのがよさそう。
+
+# エラーのサンプル
+
+# SyntaxError in Devise::RegistrationsController#new /app_name/app/views/devise/registrations/new.html.erb:10: syntax error, unexpected '<' <%= render "devise/shared/erro... ^ /app_name/app/views/devise/registrations/new.html.erb:50: syntax error, unexpected ensure, expecting ')' ensure ^~~~~~ /app_name/app/views/devise/registrations/new.html.erb:52: syntax error, unexpected end, expecting ')' end ^~~
