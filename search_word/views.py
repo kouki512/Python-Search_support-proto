@@ -38,24 +38,6 @@ def SelectLanguage(request):
 
 
 def SelectErrors(request):
-    # # 送信されたセッションの取得
-    # technique = request.session.get('technique')
-    # # 選択言語及びフレームワークによるchoicesの定義
-    # if technique['technique'] == 'rails':
-    #     error_message = (
-    #         ('syntax', 'SyntaxError'), ('undefind', 'UndefindMethod'))
-    # elif technique['technique'] == 'django':
-    #     error_message = (
-    #         ('syntax', 'SyntaxError'), ('undefind', 'UndefindMethod'))
-    # # フォームの呼び出し（使用技術は前回送信したものを初期値に）
-    # form = SelectErrorsFormClass(technique)
-    # # エラーメッセージのプルダウンの更新
-    # form.fields['error_message'].choices = error_message
-    # # contextの定義
-    # context = {
-    #     'form': form,
-    #     'technique':technique['technique']
-    # }
 
     # 送信されたセッションの取得
     technique = request.session.get('technique')
@@ -63,15 +45,16 @@ def SelectErrors(request):
 
     # フォームの呼び出し（使用技術は前回送信したものを初期値に）
     form = SelectErrorsFormClass()
-   
+
     # contextの定義
     if request.method == 'POST':
         form = SelectErrorsFormClass(request.POST)
         #form.fields['error_message'].choices = error_message
         # formに入力がある場合オブジェクトを生成
         if form.is_valid():
-            SearchWord.objects.create(**form.cleaned_data)
-            return redirect('search_words')
+            search_word = SearchWord.objects.create(**form.cleaned_data)
+            #print(search_word.pk)
+            return redirect('search_word',pk=search_word.pk)
         else:
             print(form)
     context = {
@@ -79,14 +62,18 @@ def SelectErrors(request):
     }
     return render(request, 'search_word/select_errors.html', context)
 
+
 class SuggestWordView(DetailView):
     template_name = 'search_word/suggest_result.html'
     model = SearchWord
 
 # 入力されたエラーメッセージを分割し検索に必要なワードを抽出する関数
+
+
 def selection_error(error_message):
     # エラーの大枠を抽出
-    general_error = re.sub(r'(in\s.+?#.+[\s\S]*)|(Showing.+raised:)', '', error_message.error_message)
+    general_error = re.sub(
+        r'(in\s.+?#.+[\s\S]*)|(Showing.+raised:)', '', error_message.error_message)
     # エラーの詳細を抽出
     error_detail = re.sub(r'(.+\s(/.+):)|(for\s#.+)|(.+in\s.+?#.+)|(Did you mean[\s\S]*)|(Routing Error)', '',
                           error_message.error_message)
@@ -107,10 +94,14 @@ def suggest_word(words, colection_error):
 
     # 提案ワードを配列に格納
     suggest_word.append(technique + " " + general_error + " " + error_detail)
-    suggest_word.append(technique + " " + general_error)
+    #suggest_word.append(technique + " " + general_error) 
+    # ↑ rails + syntaxなどで解決する可能性は低いと判断
+
     suggest_word.append(technique + " " + error_detail)
-    suggest_word.append(technique + " " + Feature)
-    suggest_word.append(technique + " " + Feature + " " + general_error)
+    #suggest_word.append(technique + " " + Feature)
+    # ↑ rails + 一覧ページ などではエラーの解決は困難
+    #suggest_word.append(technique + " " + Feature + " " + general_error)
+    # ↑ rails + 一覧機能 + syntaxなどで解決する可能性は低いと判断
     suggest_word.append(technique + " " + Feature + " " + error_detail)
     return suggest_word
 
@@ -129,6 +120,7 @@ def detail_func(request, pk):
     # viewに渡す物を辞書型配列に変換
     context = {'object': object, 'suggest_result': suggest_result}
     return render(request, 'search_word/suggest_result.html', context)
+
 
 def DeleteSearchWord(request, pk):
     if request.method == 'POST':

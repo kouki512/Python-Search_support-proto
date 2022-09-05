@@ -2,16 +2,29 @@
 {% block title %}検索ワード作成 {%endblock%}
 
 {% block content %}
-<form method='POST'>{% csrf_token %}
-  <div class="form">
-    <div class="form-contents">
-      <div class="form-content">
-        <p>言語及びフレームワーク</p>
-        <p>Ruby on Rails</p>
-        {{form.technique.as_hidden}}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 contents-wrapper">
+      <div >
+        <h2 class="section-title">言語及びフレームワーク</h1>
       </div>
+      <form method='POST'>{% csrf_token %}
+        <div class="form_container">
+          <div class="form">
+            <div class="form-contents">
+              <div class="form-content">
+                <div class="form-body">
+                  <h5 class="form-body-text">Ruby on Rails</h5>
+                  {{form.technique.as_hidden}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <input type="submit" value="次へ">
+        </form>
+        </div>
     </div>
   </div>
-  <input type="submit" value="次へ">
-</form>
+</div>
+
 {% endblock content %}

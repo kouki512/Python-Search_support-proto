@@ -2,29 +2,31 @@
 {% block title %}検索ワード作成 {%endblock%}
 
 {% block content %}
-<div class="form">
-  <div class="form-contents">
-    <div class="form-content">
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 contents-wrapper">
       <form method='POST'>{% csrf_token %}
-        <div class="form">
+        <div class="form form_container">
           <div class="form-contents">
             <div class="form-content">
-              <p>選択した言語及びフレームワーク</p>
               <div class="selected_technique">
-               <p>Ruby on Rails</p>
-               {{form.technique.as_hidden}}
+                {{form.technique.as_hidden}}
               </div>
- 
-              <label for="">エラーの詳細</label>
-              {{form.error_message}}
-              <label for="">現在取り組んでいること（実装機能等）</label>
-              {{form.Feature}}
+              <div>
+                <h2 class="section-title">エラーメッセージ</h1>
+                  {{form.error_message}}
+              </div>
+              <div class="form-feature">
+                <h2 class="section-title">取り組んでいること</h1>
+                  {{form.Feature}}
+              </div>
             </div>
           </div>
+          <input type="submit" value="作成する">
         </div>
-        <input type="submit" value="作成する">
       </form>
     </div>
   </div>
 </div>
+
 {% endblock content %}

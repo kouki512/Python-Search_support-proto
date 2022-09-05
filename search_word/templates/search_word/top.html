@@ -2,7 +2,21 @@
 {%block title%}検索内容一覧 {%endblock%}
 
 {% block content %}
-    <h1>検索ワードを提案するアプリ</h1>
-    <p>エラー解決の際に検索するワードが思いつかない、単語がうまくでてこない、、という場合にお使いください。</p>
-    <a href="{% url 'search_words' %}">検索内容を見に行く!</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 contents-wrapper">
+                <div class="top-contents">
+                    <div class="top-title">
+                        <h1>検索ワードを提案するアプリ</h1>
+                    </div>
+                    <div class="top-introduction">
+                        <p>エラーを解決するための検索ワードを提案するアプリです。<br>検索するワードが思いつかない、単語がうまくでてこない、、という場合にお使いください。</p>
+                    </div>
+                    <div class="top-btn-container">
+                        <a class = "top-btn btn " href="{% url 'select_errors' %}">検索ワードを作成する</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock content %}

@@ -1,0 +1,12 @@
+body {
+  font-family: "Montserrat", "游ゴシック", sans-serif;
+  color: #3E3E3E;
+  background-color: #F5FFFA;
+}
+.contents-wrapper{
+  margin: 0 auto;
+  margin-top: 30px;
+}
+.header-nav{
+  background-color: #53524A	;
+}
