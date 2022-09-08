@@ -53,8 +53,8 @@ def SelectErrors(request):
         # formに入力がある場合オブジェクトを生成
         if form.is_valid():
             search_word = SearchWord.objects.create(**form.cleaned_data)
-            #print(search_word.pk)
-            return redirect('search_word',pk=search_word.pk)
+            # print(search_word.pk)
+            return redirect('search_word', pk=search_word.pk)
         else:
             print(form)
     context = {
@@ -86,24 +86,27 @@ def selection_error(error_message):
 
 def suggest_word(words, colection_error):
     # 提案ワードを格納する配列をオブジェクトの各要素を変数に定義
-    suggest_word = []
+    suggest_words = []
+    general_error_word = []
+    detail_error_word = []
+    make_function_word = []
+
     technique = words.technique
     general_error = colection_error['general_error']
     error_detail = colection_error['error_detail']
     Feature = words.Feature
 
-    # 提案ワードを配列に格納
-    suggest_word.append(technique + " " + general_error + " " + error_detail)
-    #suggest_word.append(technique + " " + general_error) 
-    # ↑ rails + syntaxなどで解決する可能性は低いと判断
-
-    suggest_word.append(technique + " " + error_detail)
-    #suggest_word.append(technique + " " + Feature)
-    # ↑ rails + 一覧ページ などではエラーの解決は困難
-    #suggest_word.append(technique + " " + Feature + " " + general_error)
-    # ↑ rails + 一覧機能 + syntaxなどで解決する可能性は低いと判断
-    suggest_word.append(technique + " " + Feature + " " + error_detail)
-    return suggest_word
+    # 提案ワード（エラーの大枠）を配列に格納
+    general_error_word.append(technique + " " + general_error)
+    # 提案ワードを配列に格納(エラー解決ワード)
+    detail_error_word.append(
+        technique + " " + general_error + " " + error_detail)
+    detail_error_word.append(technique + " " + error_detail)
+    detail_error_word.append(technique + " " + Feature + " " + error_detail)
+    # 提案ワード（実装内容）を配列に格納
+    make_function_word.append(technique + " " + Feature)
+    suggest_words = [general_error_word, detail_error_word, make_function_word]
+    return suggest_words
 
 
 def detail_func(request, pk):
@@ -118,7 +121,8 @@ def detail_func(request, pk):
     # 検索ワードの作成ココまで
 
     # viewに渡す物を辞書型配列に変換
-    context = {'object': object, 'suggest_result': suggest_result}
+    context = {'object': object, 'collection_result': collection_result, 'general_error_word':
+               suggest_result[0], 'detail_error_word': suggest_result[1], 'make_function_word': suggest_result[2]}
     return render(request, 'search_word/suggest_result.html', context)
 
 

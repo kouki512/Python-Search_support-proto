@@ -1,18 +1,58 @@
 {% extends 'base.html' %}
 {%block title%}提案結果 {%endblock%}
+{% load static %}
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-lg-8 contents-wrapper">
             <h2 class="section-title ">提案結果</h2>
-            <h3>こちらのワードなどいかがでしょうか？</h3>
-            <table class = "table">
+            <div class="step step1">
+                <h3>ステップ１：エラーの概要の理解</h3>
+                <h6>
+                    今回のエラータイトルは<b>「{{collection_result.general_error}}」</b>です。<br>エラータイトルからはエラーの概要を読み取ることができます。    
+                </h6>
+            </div>
+            <div class="step-title">
+                <h6>エラータイトルの意味が分からない場合は、以下のワードで調べてみましょう。</h6>
+            </div>
+            <table class = "table result-table">
                 <tbody>
                     <!-- ワードを繰り返し出力 -->
-                    {% for word in suggest_result %}
+                    {% for word in general_error_word %}
                     <tr>
                         <!-- viewに情報を送信するためのフォーム -->
-                        <td>{{word}}</td>
+                        <td><b>・{{word}}</b></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="step step2">
+                <h3>ステップ2：エラーメッセージから問題を解決する。</h3>
+                <h6>エラーメッセージからは、エラーの具体的な内容とその解決の指針を読み取ることができます。</h6>
+                <h6>今回のエラーメッセージの中でも<b>「{{collection_result.error_detail}}」</b>の箇所が役に立ちそうです。</h6>
+            </div>
+            <div class="step-title">
+                <h6>以下のワードで検索し、エラーの解決をしましょう。</h6>
+            </div>
+            <table class = "table result-table">
+                <tbody>
+                    <!-- ワードを繰り返し出力 -->
+                    {% for word in detail_error_word %}
+                    <tr>
+                        <!-- viewに情報を送信するためのフォーム -->
+                        <td><b>・{{word}}</b></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <table class = "table result-table">
+                <tbody>
+                    <!-- ワードを繰り返し出力 -->
+                    {% for word in make_function_word %}
+                    <tr>
+                        <!-- viewに情報を送信するためのフォーム -->
+                        <td>・{{word}}</td>
                     </tr>
                     {% endfor %}
 

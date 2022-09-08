@@ -59,3 +59,14 @@
 .form-feature{
   margin: 30px 0px;
 }
+
+.step{
+  margin-bottom: 30px;
+  border-bottom: 1px solid #dee2e6;
+}
+.step-title h6{
+  font-weight: bold;
+}
+.result-table{
+  margin-bottom: 30px;
+}
