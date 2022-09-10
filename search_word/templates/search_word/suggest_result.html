@@ -13,7 +13,7 @@
                 </h6>
             </div>
             <div class="step-title">
-                <h6>エラータイトルの意味が分からない場合は、以下のワードで調べてみましょう。</h6>
+                <h6>{{collection_result.general_error}}の意味が分からない場合は、以下のワードで調べてみましょう。</h6>
             </div>
             <table class = "table result-table">
                 <tbody>
@@ -21,7 +21,7 @@
                     {% for word in general_error_word %}
                     <tr>
                         <!-- viewに情報を送信するためのフォーム -->
-                        <td><b>・{{word}}</b></td>
+                        <td class="error-result-content"><li><b>{{word}}</b></li></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -41,18 +41,25 @@
                     {% for word in detail_error_word %}
                     <tr>
                         <!-- viewに情報を送信するためのフォーム -->
-                        <td><b>・{{word}}</b></td>
+                        <td class="error-result-content"><li><b>{{word}}</b></li></td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            <div class="step step3">
+                <h3>番外：いま取り組んでいることについて詳しく知る</h3>
+                <h6>今実装している内容について知るとエラーの原因が見えてくることもあります。</h6>
+            </div>
+            <div class="step-title">
+                <h6>以下のワードで検索し、実装手順について理解しましょう。</h6>
+            </div>
             <table class = "table result-table">
                 <tbody>
                     <!-- ワードを繰り返し出力 -->
                     {% for word in make_function_word %}
                     <tr>
                         <!-- viewに情報を送信するためのフォーム -->
-                        <td>・{{word}}</td>
+                        <td class="error-result-content"><li><b>{{word}}</b></li></td>
                     </tr>
                     {% endfor %}
 

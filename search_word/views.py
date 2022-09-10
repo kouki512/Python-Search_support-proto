@@ -97,14 +97,13 @@ def suggest_word(words, colection_error):
     Feature = words.Feature
 
     # 提案ワード（エラーの大枠）を配列に格納
-    general_error_word.append(technique + " " + general_error)
+    general_error_word.append(technique + " " + general_error + " " + "意味")
     # 提案ワードを配列に格納(エラー解決ワード)
-    detail_error_word.append(
-        technique + " " + general_error + " " + error_detail)
     detail_error_word.append(technique + " " + error_detail)
     detail_error_word.append(technique + " " + Feature + " " + error_detail)
     # 提案ワード（実装内容）を配列に格納
     make_function_word.append(technique + " " + Feature)
+    make_function_word.append(technique + " " + Feature + " " + "実装")
     suggest_words = [general_error_word, detail_error_word, make_function_word]
     return suggest_words
 

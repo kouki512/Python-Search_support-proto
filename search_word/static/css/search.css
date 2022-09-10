@@ -70,3 +70,7 @@
 .result-table{
   margin-bottom: 30px;
 }
+
+.error-result-content{
+  background-color: #fff;
+}
