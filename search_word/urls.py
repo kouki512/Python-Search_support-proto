@@ -2,6 +2,7 @@ from django.urls import path
 from .views import detail_func,DeleteSearchWord
 from . import views 
 
+handler500 = views.my_customized_server_error
 urlpatterns = [
   # 検索したい内容の入力
   path('',views.TopPageView.as_view(),name='top'),
