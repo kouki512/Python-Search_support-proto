@@ -154,6 +154,6 @@ if not DEBUG:
     MIDDLEWARE += [
         'whitenoise.middleware.WhiteNoiseMiddleware',
     ]
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     # HerokuのConfigを読み込み
     django_heroku.settings(locals())
