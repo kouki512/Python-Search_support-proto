@@ -81,9 +81,9 @@ class SuggestWordView(DetailView):
 def selection_error(error_message):
     # エラーの大枠を抽出
     general_error = re.sub(
-        r'(in\s.+?#.+[\s\S]*)|(Showing.+raised:)', '', error_message.error_message)
+        r'(in\s.+?#.+[\s\S]*)', '', error_message.error_message)
     # エラーの詳細を抽出
-    error_detail = re.sub(r'(.+\s(/.+):)|(for\s#.+)|(.+in\s.+?#.+)|(Did you mean[\s\S]*)|(Routing Error)', '',
+    error_detail = re.sub(r'(.+\s(/.+):)|(for\s#.+)|(.+in\s.+?#.+)|(Did you mean[\s\S]*)|(Routing Error)|(LoadError)', '',
                           error_message.error_message)
 
     # 抽出したエラーメッセージを辞書型配列に格納
