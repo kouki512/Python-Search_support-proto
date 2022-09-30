@@ -6,14 +6,39 @@
     <div class="row">
         <div class="col-lg-8 contents-wrapper">
             <h2 class="section-title ">提案結果</h2>
+            <div class="step all_message">
+                <h3>エラーの全文を確認する</h3>
+                <h6>今回のエラーメッセージは以下になります。</h6>
+                    <h6><b>「{{object.error_message}}」</b></h6>
+                    <h6>このエラーの構成と意味を確認していきましょう。</h6>
+                
+            </div>
             <div class="step step1">
-                <h3>ステップ１：エラーの概要の理解</h3>
+                <h3>エラーの概要を理解する</h3>
                 <h6>
                     今回のエラータイトルは<b>「{{collection_result.general_error}}」</b>です。<br>エラータイトルからはエラーの概要を読み取ることができます。    
                 </h6>
             </div>
             <div class="step-title">
-                <h6>{{collection_result.general_error}}の意味が分からない場合は、以下のワードで調べてみましょう。</h6>
+                <h6>{{collection_result.general_error}}については以下のサイトが役に立ちそうです。</h6>
+            </div>
+            <table class = "table result-table">
+                <tbody>
+                    <!-- ワードを繰り返し出力 -->
+                    {% for word in general_error_link %}
+                    <tr>
+                        <!-- viewに情報を送信するためのフォーム -->
+                        {% if word == "参考になりそうなページを検索してみましょう。" %}
+                            <td class="error-result-content"><li><b>{{word}}</b></li></td>
+                        {% else %}
+                            <td class="error-result-content"><li><a href={{word}} target="_blank" rel="noopener noreferrer">{{word}}</a></li></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="step-title">
+                <h6>{{collection_result.general_error}}について更に理解を深めたい場合は、以下のワードで調べてみましょう。</h6>
             </div>
             <table class = "table result-table">
                 <tbody>
@@ -26,9 +51,9 @@
                     {% endfor %}
                 </tbody>
             </table>
-
+            
             <div class="step step2">
-                <h3>ステップ2：エラーメッセージから問題を解決する。</h3>
+                <h3>エラーメッセージから問題を解決する</h3>
                 <h6>エラーメッセージからは、エラーの具体的な内容とその解決の指針を読み取ることができます。</h6>
                 <h6>今回のエラーメッセージの中でも<b>「{{collection_result.error_detail}}」</b>の箇所が役に立ちそうです。</h6>
             </div>
@@ -44,25 +69,6 @@
                         <td class="error-result-content"><li><b>{{word}}</b></li></td>
                     </tr>
                     {% endfor %}
-                </tbody>
-            </table>
-            <div class="step step3">
-                <h3>番外：いま取り組んでいることについて詳しく知る</h3>
-                <h6>今実装している内容について知るとエラーの原因が見えてくることもあります。</h6>
-            </div>
-            <div class="step-title">
-                <h6>以下のワードで検索し、実装手順について理解しましょう。</h6>
-            </div>
-            <table class = "table result-table">
-                <tbody>
-                    <!-- ワードを繰り返し出力 -->
-                    {% for word in make_function_word %}
-                    <tr>
-                        <!-- viewに情報を送信するためのフォーム -->
-                        <td class="error-result-content"><li><b>{{word}}</b></li></td>
-                    </tr>
-                    {% endfor %}
-
                 </tbody>
             </table>
         </div>

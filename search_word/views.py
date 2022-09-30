@@ -96,8 +96,8 @@ def suggest_word(words, colection_error):
     # 提案ワードを格納する配列をオブジェクトの各要素を変数に定義
     suggest_words = []
     general_error_word = []
+    general_error_link = []
     detail_error_word = []
-    make_function_word = []
 
     technique = words.technique
     general_error = colection_error['general_error']
@@ -106,13 +106,34 @@ def suggest_word(words, colection_error):
 
     # 提案ワード（エラーの大枠）を配列に格納
     general_error_word.append(technique + " " + general_error + " " + "意味")
+    # (エラータイトル)のリンクを格納
+    print(type(colection_error['general_error']))
+    if 'SyntaxError' in general_error:
+        general_error_link.append("https://docs.ruby-lang.org/ja/latest/class/SyntaxError.html")
+        general_error_link.append("https://zenn.dev/nagan/articles/ca4b155c630f25")
+    elif "NoMethodError" in general_error:
+        general_error_link.append("https://docs.ruby-lang.org/ja/latest/class/NoMethodError.html")
+        general_error_link.append("https://zenn.dev/nagan/articles/ca4b155c630f25")
+    elif "NameError" in general_error:
+        general_error_link.append("https://docs.ruby-lang.org/ja/latest/class/NameError.html")
+        general_error_link.append("https://zenn.dev/nagan/articles/ca4b155c630f25")
+    elif "LoadError" in general_error:
+        general_error_link.append("https://docs.ruby-lang.org/ja/latest/class/LoadError.html")
+        general_error_link.append("https://zenn.dev/nagan/articles/ca4b155c630f25")
+    elif "TypeError" in general_error:
+        general_error_link.append("https://docs.ruby-lang.org/ja/latest/class/TypeError.html")
+        general_error_link.append("https://zenn.dev/nagan/articles/ca4b155c630f25")
+    elif "ArgumentError" in general_error:
+        general_error_link.append("https://docs.ruby-lang.org/ja/latest/class/ArgumentError.html")
+        general_error_link.append("https://zenn.dev/nagan/articles/ca4b155c630f25")
+    else:
+        general_error_link.append("参考になりそうなページを検索してみましょう。")
+    print(general_error_link)
     # 提案ワードを配列に格納(エラー解決ワード)
     detail_error_word.append(technique + " " + error_detail)
     detail_error_word.append(technique + " " + Feature + " " + error_detail)
     # 提案ワード（実装内容）を配列に格納
-    make_function_word.append(technique + " " + Feature)
-    make_function_word.append(technique + " " + Feature + " " + "実装")
-    suggest_words = [general_error_word, detail_error_word, make_function_word]
+    suggest_words = [general_error_word, detail_error_word, general_error_link]
     return suggest_words
 
 
@@ -129,7 +150,7 @@ def detail_func(request, pk):
 
     # viewに渡す物を辞書型配列に変換
     context = {'object': object, 'collection_result': collection_result, 'general_error_word':
-               suggest_result[0], 'detail_error_word': suggest_result[1], 'make_function_word': suggest_result[2]}
+               suggest_result[0], 'detail_error_word': suggest_result[1],'general_error_link':suggest_result[2]}
     return render(request, 'search_word/suggest_result.html', context)
 
 
