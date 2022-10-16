@@ -1,4 +1,7 @@
 /* top.html */
+p{
+  font-weight: 550;
+}
 .top-contents{
   margin-top: 30px;
 }
