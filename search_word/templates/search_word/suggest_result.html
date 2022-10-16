@@ -5,18 +5,21 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 contents-wrapper">
-            <h2 class="section-title ">提案結果</h2>
+            <h2 class="section-title ">エラーを読み解く</h2>
             <div class="step all_message">
-                <h3>エラーの全文を確認する</h3>
-                <h6>今回のエラーメッセージは以下になります。</h6>
-                    <h6><b>「{{object.error_message}}」</b></h6>
-                    <h6>このエラーの構成と意味を確認していきましょう。</h6>
+                <h3>エラーメッセージを確認する</h3>
+                <h6>エラーの解決に必要な文章は以下になります。</h6>
+                    <h6><b>{{object.error_message|linebreaksbr}}</b></h6>
+                    <h6>エラーを解決するためには、エラーメッセージの中から重要なワードを抜き出し、その意味を理解する必要があります。</h6>
+                    <h6>次の章から、エラーメッセージの内容を詳しく見ていきます。</h6>
                 
             </div>
             <div class="step step1">
                 <h3>エラーの概要を理解する</h3>
                 <h6>
-                    今回のエラータイトルは<b>「{{collection_result.general_error}}」</b>です。<br>エラータイトルからはエラーの概要を読み取ることができます。    
+                    初めに、エラーの概要を理解しましょう。<br>
+                    エラーの概要を理解することで、エラーの大まかな理由が分かるようになります。<br>
+                    今回は<b>「{{collection_result.general_error}}」</b>という記述に概要が示されています。
                 </h6>
             </div>
             <div class="step-title">
