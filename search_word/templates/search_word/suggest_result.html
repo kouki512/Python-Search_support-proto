@@ -5,124 +5,149 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 contents-wrapper">
-            <h2 class="section-title ">エラーを読み解く</h2>
-            <div class="step all_message">
-                <h3><b>エラーメッセージを確認する</b></h3>
-                <h6>エラーの解決に必要な文章は以下になります。</h6>
-                    <h6><b>{{object.error_message|linebreaksbr}}</b></h6>
-                    <h6>エラーを解決するためには、エラーメッセージの中から重要なワードを抜き出し、その意味を理解する必要があります。</h6>
-                    <h6>次の章から、エラーメッセージの内容を詳しく見ていきます。</h6>
+            <h2 class="section-title">エラーを読み解く</h2>
+            <div class="step-btn">
+                <input type="checkbox" id="content-title1">
+                <label for="content-title1" class="content-title"><h3><b>読み解く文章を確認する</b></h3></label>
+                <div class="step-container">
+                    <div class="step-introduction">
+                        <h5>エラーの解決に必要な文章はこちらになります。</h5>
+                        <h6 class="error-result-content"><b>{{object.error_message|linebreaksbr}}</b></h6>
+                    </div>
+                        <h6>エラーを解決するためには、エラーメッセージの中から重要なワードを抜き出し、その意味を理解する必要があります。</h6>
+                        <h6>次の章から、エラーメッセージの内容を詳しく見ていきます。</h6>
+                </div>
                 
             </div>
-            <div class="section">
+            <div class="step-btn">
+                <input type="checkbox" id="content-title2">
+                <label for="content-title2" class="content-title"><h3><b>エラーの概要と発生場所を理解する</b></h3></label>
                 <div class="step-container">
-                    <h3><b>エラーの概要と発生場所を理解する</b></h3>
-                    
-                        <!-- 初めに、エラーの概要を理解しましょう。<br>
-                        エラーの概要を理解することで、エラーの大まかな理由が分かるようになります。<br>
-                        今回は<b>「{{collection_result.general_error}}」</b>という記述に概要が示されています。 -->
+                    <div class="step-introduction">
                         <h5>初めに、エラーメッセージの一番上の行に着目していきます。</h5>
-                    
-                        <p class="error-result-content"><b>{{collection_result.general_error}}</b></p>
-                        <p>　この文章からは、以下の２つを読み取ることができます。</p>
-                        <ul class="error-summary-lists">
-                            <li class="error-summary-list">エラーの概要</li>
-                            <li class="error-summary-list">どのコントローラ・アクションを実行した際に起きたか</li>
-                            <p class="error-summary-list">※コントローラ・アクション名は示されないこともあります。</p>
-                        </ul>
-                        <div class="step">
+                            <p class="error-result-content"><b>{{collection_result.general_error}}</b></p>
+                    </div>
+                    <p>　この文章からは、以下の２つを読み取ることができます。</p>
+                    <ul class="error-summary-lists">
+                        <li class="error-summary-list">エラーの概要</li>
+                        <li class="error-summary-list">どのコントローラ・アクションを実行した際に起きたか</li>
+                        <p class="error-summary-list">※コントローラ・アクション名は示されないこともあります。</p>
+                    </ul>
+                    <div class="step">
+                        <div class="step-title">
                             <h4><b>エラーの概要を理解する</b></h4>
+                        </div>
+                        <div class="step-introduction">
                             <h6>今回のエラーの概要は以下のものになります。</h6>
                             <p class="error-result-content"><b>{{collection_result.summary_error}}</b></p>
-                            <p>　エラーの概要を理解することで、解決の大まかな指針を立てることができるようになります。<br>それにより、場当たり的ではなく、<b>根拠を持ってエラー解決に取り組めるようになります。</b></p>
                         </div>
-                </div>
-                <div class="step-title">
-                    <h6>{{collection_result.summary_error}}については以下のサイトが役に立ちそうです。</h6>
-                </div>
-                <table class = "table result-table">
-                    <tbody>
-                        <!-- ワードを繰り返し出力 -->
-                        {% for word in summary_error_link %}
-                        <tr>
-                            <!-- viewに情報を送信するためのフォーム -->
-                            {% if word == "参考になりそうなページを検索してみましょう。" %}
-                                <td class="error-result-content"><li><b>{{word}}</b></li></td>
-                            {% else %}
-                                <td class="error-result-content"><li><a href={{word}} target="_blank" rel="noopener noreferrer">{{word}}</a></li></td>
-                            {% endif %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <div class="step-title">
-                    <h6>{{collection_result.summary_error}}について更に理解を深めたい場合は、以下のワードで調べてみましょう。</h6>
-                </div>
-                <table class = "table result-table">
-                    <tbody>
-                        <!-- ワードを繰り返し出力 -->
-                        {% for word in summary_error_word %}
-                        <tr>
-                            <!-- viewに情報を送信するためのフォーム -->
-                            <td class="error-result-content"><li><b>{{word}}</b></li></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <div class="step">
-                    <h4><b>実行したコントローラとアクションを把握する</b></h4>
-                    <h6>今回のエラーが発生している場所は以下に記されています。</h6>
-                    <p class="error-result-content"><b>{{collection_result.general_path}}</b></p>
-                    <p>上記の文章の<b>#</b>を挟んだ<b>左側がコントローラ名、右側がアクション名</b>となります。</p>
-                    <p>エラーがどこで起きているかを確認することで、エラー解決の際に見るべきポイントを絞ることができます。</p>
-                    <p>※コントローラ・アクション名が示されますが、それに<b>関連したファイルでエラーが発生している場合もあるので注意が必要</b>です。<br>
-                    【例】（homesコントローラのindexアクションの場合）
-                    <ul>
-                        <li>モデルファイル（home.rb）</li>
-                        <li>viewファイル（index.html.erb等）</li>
-                        <li>その他関連しているファイル（CSSファイル等）</li>
-                    </ul>
-                    </p>
+                        <p>　エラーの概要を理解することで、解決の大まかな指針を立てることができるようになります。<br>それにより、場当たり的ではなく、<b>根拠を持ってエラー解決に取り組めるようになります。</b></p>
+                    </div>
+                    
+                    <div class="step-introduction">
+                        <h6>{{collection_result.summary_error}}については以下のサイトが役に立ちそうです。</h6>
+                        <table class = "table result-table">
+                            <tbody>
+                                <!-- ワードを繰り返し出力 -->
+                                {% for word in summary_error_link %}
+                                <tr>
+                                    <!-- viewに情報を送信するためのフォーム -->
+                                    {% if word == "参考になりそうなページを検索してみましょう。" %}
+                                        <td class="error-result-content"><li><b>{{word}}</b></li></td>
+                                    {% else %}
+                                        <td class="error-result-content"><li><a href={{word}} target="_blank" rel="noopener noreferrer">{{word}}</a></li></td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="step-introduction">
+                        <h6>{{collection_result.summary_error}}について更に理解を深めたい場合は、以下のワードで調べてみましょう。</h6>
+                    
+                        <table class = "table result-table">
+                            <tbody>
+                                <!-- ワードを繰り返し出力 -->
+                                {% for word in summary_error_word %}
+                                <tr>
+                                    <!-- viewに情報を送信するためのフォーム -->
+                                    <td class="error-result-content"><li><b>{{word}}</b></li></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="step">
+                        <div class="step-title">
+                            <h4><b>実行したコントローラとアクションを把握する</b></h4>
+                        </div>
+                        <div class="step-introduction">
+                            <h6>エラー発生時に実行していたコントローラ・アクション名は以下に示されています。</h6>
+                            <p class="error-result-content"><b>{{collection_result.general_path}}</b></p>
+                        </div>
+                        <p>上記の文章の<b>#</b>を挟んだ<b>左側がコントローラ名、右側がアクション名</b>となります。</p>
+                        <p>どのコントローラ・アクション実行時にエラーが発生したかを確認することで、エラー解決時に見るべきポイントを絞ることができます。</p>
+                        <p>※コントローラ・アクション名が示されますが、それに<b>関連したファイルでエラーが発生している場合もあるので注意が必要</b>です。<br>
+                        【例】（homesコントローラのindexアクションの場合）
+                        <ul>
+                            <li>モデルファイル（home.rb）</li>
+                            <li>viewファイル（index.html.erb等）</li>
+                            <li>その他関連しているファイル（CSSファイル等）</li>
+                        </ul>
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="section">
-                <div class="step-container">
-                    <h3><b>エラーの詳細を読み解く</b></h3>
-                    <h6>次に以下の文章を読み解いていきます。</h6>
-                    <p class="error-result-content"><b>{{collection_result.reject_summary|linebreaksbr}}</b></p>
-                    <h6>エラーメッセージからは、エラーの具体的な内容とその解決の指針を読み取ることができます。</h6>
-                </div>
-            
-                <div class="step">
-                    {% if collection_result.file_path %}
-                        <h4><b>エラーの具体的な発生場所を把握する</b></h4>
-                        <h6>まず、以下の一文について見ていきます。</h6>
-                        <p class="error-result-content"><b>{{collection_result.file_path|linebreaksbr}}</b></p>
-                        <p>"Showing"から始める一文からは、<b>エラーが発生しているファイル名を確認することができます。</b></p>
-                        <p>また、<b>「#数字」</b>のような記載がある場合、そこから<b>ファイルの何行目でエラーが起こっているかを読み取ることができます。</b></p>
-                        <h5><b>エラーがどのファイルの何行目で発生しているかを確認してみましょう。</b></h5>
-                    {% endif %}
-                </div>
-                <div class="step">
-                        <h4><b>エラーの具体的な原因を特定する</b></h4>
-                        <h6>最後に、エラーの具体的な原因を特定していきます。以下の一文にエラーの原因が示されていそうです。</h6>
-                        <p class="error-result-content"><b>{{collection_result.error_detail}}</b></p>
-                    <h5><b>翻訳サイトなどを使用し、エラーの原因を特定してみましょう。</b></h5>
-                    <div class="step-title">
-                        <h6>特定が上手く行かない場合、以下のワードで検索してみましょう。</h6>
+            <div class="step-btn">
+                    <input type="checkbox" id="content-title3">
+                    <label for="content-title3" class="content-title"><h3><b>エラーの詳細を読み解く</b></h3></label>
+                    <div class="step-container">
+                        <div class="step-introduction">
+                            <h5>次に以下の文章を読み解いていきます。</h5>
+                            <p class="error-result-content"><b>{{collection_result.reject_summary|linebreaksbr}}</b></p>
+                        </div>
+                        <h6>エラーメッセージからは、エラーの具体的な内容とその解決の指針を読み取ることができます。</h6>
+                    <div class="step">
+                        {% if collection_result.file_path %}
+                        <div class="step-title">
+                            <h4><b>エラーの具体的な発生場所を把握する</b></h4>
+                        </div>
+                        <div class="step-introduction">
+                            <h6>まず、以下の一文について見ていきます。</h6>
+                            <p class="error-result-content"><b>{{collection_result.file_path|linebreaksbr}}</b></p>
+                        </div>
+                            <p>"Showing"から始める一文からは、<b>エラーが発生しているファイル名を確認することができます。</b></p>
+                            <p>また、<b>「#数字」</b>のような記載がある場合、そこから<b>ファイルの何行目でエラーが起こっているかを読み取ることができます。</b></p>
+                            <h5><b>エラーがどのファイルの何行目で発生しているかを確認してみましょう。</b></h5>
+                        {% endif %}
                     </div>
-                    <table class = "table result-table">
-                        <tbody>
-                            <!-- ワードを繰り返し出力 -->
-                            {% for word in detail_error_word %}
-                            <tr>
-                                <!-- viewに情報を送信するためのフォーム -->
-                                <td class="error-result-content"><li><b>{{word}}</b></li></td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                    <div class="step">
+                        <div class="step-title">
+                            <h4><b>エラーの具体的な原因を特定する</b></h4>
+                        </div>
+                        <div class="step-introduction">
+                            <h6>エラーの具体的な原因を特定していきます。以下の一文にエラーの原因が示されていそうです。</h6>
+                            <p class="error-result-content"><b>{{collection_result.error_detail}}</b></p>
+                        </div>
+                        <div class="step-introduction">
+                            <h5><b>翻訳サイトなどを使用し、エラーの原因を特定してみましょう。</b></h5>
+
+                            <h6>特定が上手く行かない場合、以下のワードで検索してみましょう。</h6>
+                            <table class = "table result-table">
+                                <tbody>
+                                
+                                <!-- ワードを繰り返し出力 -->
+                                {% for word in detail_error_word %}
+                                <tr>
+                                    <!-- viewに情報を送信するためのフォーム -->
+                                    <td class="error-result-content"><li><b>{{word}}</b></li></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
             </div>
         </div>
     </div>

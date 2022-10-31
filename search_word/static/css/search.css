@@ -63,12 +63,22 @@ p{
   margin: 30px 0px;
 }
 
+.step-btn{
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #dee2e6;
+}
 .step{
   margin-bottom: 30px;
   border-bottom: 1px solid #dee2e6;
 }
-.step-title h6{
+.step-title{
+  text-align: center;
   font-weight: bold;
+}
+.step-introduction{
+  text-align: center;
+  margin: 0 0 20px;
 }
 .result-table{
   margin-bottom: 30px;
@@ -76,4 +86,47 @@ p{
 
 .error-result-content{
   background-color: #fff;
+  padding: 15px 0;
+}
+
+/* ボタンを押したら要素を表示・非表示にする */
+#content-title1{
+  display: none;
+}
+#content-title2{
+  display: none;
+}
+#content-title3{
+  display: none;
+}
+.content-title{
+  display: inline-block;
+  padding: 10px 10px 5px;
+  cursor: pointer;
+  color: #fff;
+  background-color: #e6bb00;
+  border-radius: 100vh;
+}
+.step-container{
+visibility: hidden;
+text-align: left;
+padding-top: 20px;
+margin: 0 auto;
+height: 0;
+}
+#content-title1:checked+label+.step-container{
+  opacity:1;
+  visibility: visible;
+  height: auto;
+}
+#content-title2:checked+label+.step-container{
+  visibility: visible;
+  opacity:1;
+  height: auto;
+}
+#content-title3:checked+label+.step-container{
+  visibility: visible;
+  opacity:1;
+  height: auto;
+
 }
