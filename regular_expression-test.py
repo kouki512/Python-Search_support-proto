@@ -19,7 +19,8 @@ Did you mean?  title
 
 route_error = '''NameError in BooksController#create
 undefined local variable or method `ok_params' for #<BooksController:0x00007f6d40078118> Did you mean? book_params params @_params to_param'''
-b = '''Showing /app_name/app/views/books/index.html.erb where line #43 raised:'''
+b = '''Routing Error
+No route matches [GET] "/aaa"'''
 error_type = syntax
 general_error = re.sub(r'in\s.+?#.+\n.*', '', error_type)
 general_error2 = re.sub(r'in\s.+?#.+', '', a)
@@ -31,7 +32,7 @@ error_details = re.sub(r'(.+\s(/.+):)|(.+\n)', '', error_type)
 # general_error3の解説
 # (.*\s)+(.+#.+)=>任意の文字列＋#~（コントローラ名＃アクション名）
 # .*\s*(?=\n|\r)=>任意の文字列（＋半角）＋改行文字
-general_error3 = re.search(r'(?<=\bin\b\s)(.*\s)+(.+#.+)|.*\s*(?=\n|\r)', a )
+general_error3 = re.search(r'.*\s*(?=\n|\r)', b )
 # summary_errorの解説
 # .*\s(?=\bin\b\s)|.*\s* => "in"という単語より前の任意の文字列 or 任意の文字列（パスが書かれていない場合）
 summary_error = re.search(r'.*\s(?=\bin\b\s)|.*\s*',general_error3.group())

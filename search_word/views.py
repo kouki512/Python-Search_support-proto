@@ -78,7 +78,7 @@ def selection_error(error_message):
     #     r'(in\s.+?#.+[\s\S]*)', '', error_message.error_message)
     
     # xxxError in yyy#zzz の抽出
-    selection_general_error = re.search(r'(?<=\bin\b\s)(.*\s)+(.+#.+)|.*\s*(?=\n|\r)', error_message.error_message)
+    selection_general_error = re.search(r'.*\s*(?=\n|\r)', error_message.error_message)
     if selection_general_error:
         general_error = selection_general_error.group()
     else:

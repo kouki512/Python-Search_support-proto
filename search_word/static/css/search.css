@@ -77,7 +77,8 @@ p{
   font-weight: bold;
 }
 .step-introduction{
-  text-align: center;
+  display: flex;
+  justify-content: center;
   margin: 0 0 20px;
 }
 .result-table{
