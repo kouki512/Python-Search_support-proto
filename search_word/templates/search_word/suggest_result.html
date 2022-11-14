@@ -13,7 +13,7 @@
                     <div class="step-introduction">
                         <div class="step-start">
                             <h5>エラーの解決に必要な文章はこちらになります。</h5>
-                            <h6 class="error-result-content"><b>{{object.error_message|linebreaksbr}}</b></h6>
+                            <h6 class="error-result-content " id="all-error"><b>{{object.error_message|linebreaksbr}}</b></h6>
                         </div>
                     </div>
                         <h6>エラーを解決するためには、エラーメッセージの中から重要なワードを抜き出し、その意味を理解する必要があります。</h6>
@@ -28,7 +28,7 @@
                     <div class="step-introduction">
                         <div class="step-start">
                             <h5>初めに、エラーメッセージの一番上の行に着目していきます。</h5>
-                                <p class="error-result-content"><b>{{collection_result.general_error}}</b></p>
+                                <p class="error-result-content " id="summary-error"><b>{{collection_result.general_error}}</b></p>
                         </div>
                     </div>
                     <p>　この文章からは、以下の２つを読み取ることができます。</p>
@@ -53,6 +53,9 @@
                     <div class="step-introduction">
                         <div class="step-start">
                             <h6>{{collection_result.summary_error}}については以下のサイトが役に立ちそうです。</h6>
+                            <h6>　1番目に示されているサイトはRubyの公式リファレンスであり、正確な情報を得ることができます。まずはこちらを参照しましょう。</h6>
+                            <h6>　2番目に示されているサイトは個人の方が作成された記事になります。<br>
+                                公式リファレンスよりは情報の正確さに欠けますが、公式リファレンスの内容をよりかみ砕いて説明されています。公式リファレンスが難しいと感じたら目を通してみてください。</h6>
                             <table class = "table result-table">
                                 <tbody>
                                     <!-- ワードを繰り返し出力 -->
@@ -84,6 +87,35 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
+                            <div class="step-title">
+                                <h4><b>検索のコツ</b></h4>
+                            </div>
+                            <div class="search-reason">
+                                <p>　検索を行う際は、以下のフォーマットで検索すると目的の情報を手に入れやすいです。
+                                <p class="error-result-content"><b>言語(フレームワーク) + 調べたい内容 + 補足事項（意味,Qiita等）</b></p>
+                                <p>　まず、検索の初めに、使用している言語やフレームワークを含めます。プログラミングの中でも、どの言語やフレームワークについての情報が必要かを含めることによって<b>検索する対象を大幅に絞ることができます。</b></p>
+                                <p>　次に、エラーメッセージや実装方法などの<b>実際に調べたい内容</b>を含めます。しかし、ここにもいくつか注意点があります。</p>
+                                <ol>
+                                    <b>
+                                        <li>具体的に内容を入力する</li>
+                                        <li>変数名やコントローラ名など個人で命名したものはなるべく含めない</li>
+                                    </b>
+                                </ol>
+                                <p>　調べたい内容を具体的に書くことによって、検索対象が絞られ自分の欲しい情報がヒットしやすくなります。検索を行う前に、自分が何について調べたいかを一度考えてみると良いでしょう。</p>
+                                <p>　また、自分で命名した変数やコントローラは、他者と共通していない内容になるので検索にヒットしづらくなります。なるべく控えましょう。</p>
+                                <p>※ エラー文の途中など、取り除くと文章がおかしくなる場合は、変数名を含めた状態で検索して、ヒットしない場合に取り除いて再度検索するなど工夫してみましょう。</p>
+                                <p>　最後に、検索の悪い例を紹介します。（Railsのエラーを検索することを想定しています。）</p>
+                                <table class = "table result-table">
+                                    <tbody>
+                                        <tr><td class="error-result-content"><li><b>プログラミング 分からない（検索内容が曖昧）</b></li></td></tr>
+                                        <tr><td class="error-result-content"><li><b>rails エラー（railsのどんなエラーが出ているか不明）</b></li></td></tr>
+                                        <tr><td class="error-result-content"><li><b>rails Dogsコントローラ SyntaxError（独自で作成したコントローラを含めている）</b></li></td></tr>
+                                            <!-- viewに情報を送信するためのフォーム -->
+                                        
+                                    </tbody>
+                                </table>
+                                
+                            </div>
                         </div>
                     </div>
                     <div class="step">
@@ -116,7 +148,7 @@
                         <div class="step-introduction">
                             <div class="step-start">
                                 <h5>次に以下の文章を読み解いていきます。</h5>
-                                <p class="error-result-content"><b>{{collection_result.reject_summary|linebreaksbr}}</b></p>
+                                <p class="error-result-content"id="error-detail"><b>{{collection_result.reject_summary|linebreaksbr}}</b></p>
                             </div>
                         </div>
                         <h6>エラーメッセージからは、エラーの具体的な内容とその解決の指針を読み取ることができます。</h6>
@@ -170,4 +202,13 @@
         </div>
     </div>
 </div>
+<!-- <script>
+    const all_error = document.getElementById('all-error').value;
+    console.log(all_error);
+    
+    const summary_error = document.getElementById('summary-error').value
+    console.log(summary_error);
+    const error_detail = document.getElementById('error-detail').value
+
+</script> -->
 {% endblock content %}
