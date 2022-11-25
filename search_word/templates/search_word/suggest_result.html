@@ -176,11 +176,33 @@
                             <div class="step-start">
                                 <h6>エラーの具体的な原因を特定していきます。以下の一文にエラーの原因が示されていそうです。</h6>
                                 <p class="error-result-content"><b>{{collection_result.error_detail}}</b></p>
+                                {% if 'undefined method' in collection_result.error_detail %}       
+                                    <p>まず、"undefind method"の意味について着目します。</p>
+                                    <p>それぞれの単語は以下の意味になります。</p>
+                                    <b>
+                                        <ul>
+                                            <li>undefined => 「未定義」「定義されていない」 </li>
+                                            <li>method => 「メソッド」「方法」</li>
+                                        </ul>
+                                    </b>
+                                    <p>Railsのエラーで示される"method"は基本的に、Railsで呼び出すことのできる「メソッド」のことを指しています。</p>
+                                    <p>例：newメソッド, allメソッドなど、「変数.メソッド名」で表せるもの。（メソッド単体で使用できるものもあります。）</p>
+                                    <p>つまり、エラーの内容をまとめると<b>「undefind methodの後に記載されているメソッドが定義されていない」</b>という意味になります。</p>
+                                    <p>エラーの原因としては以下のようなものが考えられます。</p>
+                                    <b>
+                                        <ul>
+                                            <li>呼び出すメソッド名が間違っている（例：.newを.nweと書いている）</li>
+                                            <li>呼び出そうとしている変数名,中身に問題がある<br>
+                                                （例："@hoge.title"と記述しているが、@hogeをコントローラで定義していない。）</li>
+                                            <li>独自メソッドが未定義である</li>
+                                        </ul>
+                                    </b>
+                                    <h5><b>上記の原因例を参考に、エラーの解決をしてみましょう。</b></h5>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="step-introduction">
                             <div class="step-start">
-                                <h5><b>翻訳サイトなどを使用し、エラーの原因を特定してみましょう。</b></h5>
                                 <h6>特定が上手く行かない場合、以下のワードで検索してみましょう。</h6>
                                 <table class = "table result-table">
                                     <tbody>
@@ -202,13 +224,4 @@
         </div>
     </div>
 </div>
-<!-- <script>
-    const all_error = document.getElementById('all-error').value;
-    console.log(all_error);
-    
-    const summary_error = document.getElementById('summary-error').value
-    console.log(summary_error);
-    const error_detail = document.getElementById('error-detail').value
-
-</script> -->
 {% endblock content %}
