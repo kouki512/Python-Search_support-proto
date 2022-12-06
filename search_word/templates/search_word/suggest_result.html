@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{%block title%}提案結果 {%endblock%}
+{%block title%}提案結果{%endblock%}
 {% load static %}
 {% block content %}
 <div class="container">
@@ -28,7 +28,7 @@
                     <div class="step-introduction">
                         <div class="step-start">
                             <h5>初めに、エラーメッセージの一番上の行に着目していきます。</h5>
-                                <p class="error-result-content " id="summary-error"><b>{{collection_result.general_error}}</b></p>
+                                <p class="error-result-content " id="summary-error">{{collection_result.general_error}}</p>
                         </div>
                     </div>
                     <p>　この文章からは、以下の２つを読み取ることができます。</p>
@@ -44,7 +44,7 @@
                         <div class="step-introduction">
                             <div class="step-start">
                                 <h6>今回のエラーの概要は以下のものになります。</h6>
-                                <p class="error-result-content"><b>{{collection_result.summary_error}}</b></p>
+                                <p class="error-result-content" id="summary_error_title">{{collection_result.summary_error}}</p>
                             </div>
                         </div>
                         <p>　エラーの概要を理解することで、解決の大まかな指針を立てることができるようになります。<br>それにより、場当たり的ではなく、<b>根拠を持ってエラー解決に取り組めるようになります。</b></p>
@@ -148,7 +148,7 @@
                         <div class="step-introduction">
                             <div class="step-start">
                                 <h5>次に以下の文章を読み解いていきます。</h5>
-                                <p class="error-result-content"id="error-detail"><b>{{collection_result.reject_summary|linebreaksbr}}</b></p>
+                                <p class="error-result-content"><b>{{collection_result.reject_summary|linebreaksbr}}</b></p>
                             </div>
                         </div>
                         <h6>エラーメッセージからは、エラーの具体的な内容とその解決の指針を読み取ることができます。</h6>
@@ -175,7 +175,7 @@
                         <div class="step-introduction">
                             <div class="step-start">
                                 <h6>エラーの具体的な原因を特定していきます。以下の一文にエラーの原因が示されていそうです。</h6>
-                                <p class="error-result-content"><b>{{collection_result.error_detail}}</b></p>
+                                <p class="error-result-content" id="error-detail"><b>{{collection_result.error_detail}}</b></p>
                                 {% if 'undefined method' in collection_result.error_detail %}       
                                     <p>まず、"undefind method"の意味について着目します。</p>
                                     <p>それぞれの単語は以下の意味になります。</p>
@@ -253,6 +253,29 @@
                                                 例： undefined local variable or method 'hogehoge　'（hogehogeの右側に空白がある）</li>
                                         </ol>
                                     </b>
+                                {% elif 'syntax error' in collection_result.error_detail %}
+                                <p>まず、"syntax error"の意味について着目します。</p>
+                                <p>syntaxは「文法」という意味を持つ単語です。</p>
+                                <p>つまり、今回のエラーでは「コードの文法的に何かしらの問題がある」ということを示しています。</p>
+                                <p>文法的な問題としては、以下のようなものが挙げられます。</p>
+                                <b>
+                                    <ul>
+                                        <li>if文やeach文の末尾に"end"がない。</li>
+                                        <li>viewページでrubyの文法を使う際の "<%= %>" に間違いがある。</li>
+                                        <li>link_toの記述の間に　","　がない。</li>
+                                        <li>全角空白が存在している。</li>
+                                    </ul>
+                                </b>
+                                <p>Syntax Error が出た際には、こうした細かい点でのミスが多いので、上記の点に問題がないか確認してみてください。</p>
+                                <p>また、全角空白が存在しているかは、以下の手順を参考に確認してみてください。</p>
+                                <p>※ VSCode, Cloud9など、大体のエディタで同一な方法ですが、エディタによってコマンド等が異なる場合もあります。</p>
+                                <b>
+                                    <ul>
+                                        <li>キーボードの " Ctrl + F " (macの場合は " Command + F " ) を押下し、検索バーを出す。</li>
+                                        <li>検索バーに全角の空白を入力</li>
+                                        <li>全角空白がヒットしているかを確認する。</li>
+                                    </ul>
+                                </b>
                                 {% endif %}
                             </div>
                         </div>
@@ -279,4 +302,27 @@
         </div>
     </div>
 </div>
+<script>
+    function replacer( str, word , att  ) {
+        search_text = word.replace(/\n/,'')
+        var SearchString = '('+ search_text + ')';
+        var RegularExp = new RegExp(SearchString);
+        var ReplaceString = '<span class="' + att + '">$1</span>';
+        var ResString = str.replace( RegularExp , ReplaceString);
+        console.log(search_text);
+        console.log(RegularExp);
+        console.log(str.replace( RegularExp , ReplaceString));
+        // console.log(search_text);
+        return ResString;
+    }
+
+    window.onload = function AddHighlightSummary(){
+        // 全体の文章の取得
+        target = document.getElementById("all-error").innerHTML;
+        summary_error = document.getElementById("summary-error").innerHTML;
+        forShowSummary = replacer(target,summary_error,"mark");
+        // console.log(forShowSummary);
+        document.getElementById("summary-error").innerHTML = forShowSummary;
+    }
+</script>
 {% endblock content %}
