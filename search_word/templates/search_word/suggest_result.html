@@ -198,6 +198,40 @@
                                         </ul>
                                     </b>
                                     <h5><b>上記の原因例を参考に、エラーの解決をしてみましょう。</b></h5>
+                                {% elif 'missing required keys' in collection_result.error_detail %}
+                                    <p>まず、"No route matches"の意味について着目します。</p>
+                                    <p>この文を翻訳してみると「ルートが一致しない」という意味になります。</p>
+                                    <p>今回の一致しなかったルーティングは、"no route matches"の次に示されている文章に記述されています。</p>
+                                    <p class="error-result-content"><b>{:action=>"xx", :controller=>"yy",:key=>"zz"}</b></p>
+                                    <p>{}内の各要素はそれぞれ以下の意味を表します。</p>
+                                    <ul>
+                                        <li>「:action=>"xx"」⇒ 参照しているアクション名</li>
+                                        <li>「:contraller=>"yy"」⇒ 参照しているコントローラ名</li>
+                                        <li>「:key=>"zz"」⇒ [:id]や[:name]等といった指定したパラメータのキー</li>
+                                    </ul>
+                                    <p>そして、なぜルーティングを読むことが出来なかった理由が、次の"missing required keys"の文章に記されています。
+                                    </p>
+                                    <p>"missing required keys"は「必要なキーがない」という意味になります。</p>
+                                    <p>必要なキーとは、"missing required keys"の次にある[:id]などのことです。<br>
+                                        （上記{}内の:keyがそれに該当します。）
+                                    </p>
+                                    <p>つまり、今回のエラーは<b>指定されたルーティング（URL）にアクセスする為に必要な情報が足りていない</b>というエラーになります。</p>
+                                    <p>エラーの解決の為に、以下の項目を確認してみてください。</p>
+                                    <b>
+                                        <ul>
+                                            <li>link_toやform_withなどで指定しているパスにidを渡しているか<br>
+                                                (例：list_path(@list.id)にするところを、カッコの中身が記述されていない等)
+                                            </li>
+                                            <br>
+                                            <li>route.rbで指定しているルーティングが想定通りに記述できているか（誤字などが無いか）</li>
+                                            <br>
+                                            <li>想定している遷移先へのパスをlink_to等で指定できているか<br>
+                                                （indexにアクセスしたいのにshowにアクセスするパスが指定されている。）
+                                            </li>
+                                        </ul>
+                                    </b>
+
+
                                 {% elif 'No route matches' in collection_result.error_detail %}
                                     <p>まず、"No route matches"の意味について着目します。</p>
                                     <p>この文を翻訳してみると「ルートが一致しない」という意味になります。</p>
@@ -254,7 +288,6 @@
                                         </ol>
                                     </b>
                                 {% elif 'syntax error' in collection_result.error_detail %}
-<<<<<<< HEAD
                                 <p>まず、"syntax error"の意味について着目します。</p>
                                 <p>syntaxは「文法」という意味を持つ単語です。</p>
                                 <p>つまり、今回のエラーでは「コードの文法的に何かしらの問題がある」ということを示しています。</p>
