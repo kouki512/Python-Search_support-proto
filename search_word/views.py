@@ -102,13 +102,13 @@ def selection_error(error_message):
     # エラーの概要を取り除いたメッセージ全て
     reject_summary = re.sub(general_error,"",error_message.error_message)
     # 具体的なファイル名
-    selection_file_path = re.findall(r'Showing.*raised:',error_message.error_message)
+    selection_file_path = re.findall(r'Showing.*raised:',reject_summary)
     if selection_file_path:
         file_path = selection_file_path[0]
     else:
         file_path = None 
     # 解決に繋がるエラーメッセージ
-    error_detail = re.sub(r'(.+\s(/.+):)|(for\s#.+)|(.+in\s.+?#.+)|(Did you mean[\s\S]*)|(Routing Error)|(LoadError)', '',error_message.error_message)
+    error_detail = re.sub(r'(.+\s(/.+):)|(for\s#.+)|(.+in\s.+?#.+)|(Did you mean[\s\S]*)|(Routing Error)|(LoadError)', '',reject_summary)
 
     # 抽出したエラーメッセージを辞書型配列に格納
     collection_result = {"general_error": general_error,
